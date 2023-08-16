@@ -60,28 +60,32 @@ def get_repos_from_folders():
         # no public repos
         pass
 
-    repos = [{
-        'name': name.removesuffix(".git"),
-        '__no_info__': True,  # no local info about the repo
-    } for name in folders]
+    repos = [{ 'name': name.removesuffix(".git") } for name in folders]
 
     return repos
 
-
 def format_repo_info(repo):
-    if repo.get("__no_info__"):
-        # no local info about the repo
-        return colorize('cyan', repo['name'])
+    result = colorize('cyan', repo['name'])
+    tags = []
 
-    # TODO: handle missing repo info (like isArchived)
-    return (
-        f"{colorize('cyan', repo['name'])} "
-        "["
-        f"{colorize('red', 'private') if repo['isPrivate'] else colorize('green', 'public')}"
-        f"{', fork' if repo['isFork'] else ''}"
-        f"{', archived' if repo['isArchived'] else ''}"
-        "]"
-    )
+    is_private = repo.get('isPrivate')
+    if is_private is None:
+        pass  # No info on whether is private/public
+    elif is_private:
+        tags.append(colorize('red', 'private'))
+    elif not is_private:
+        tags.append(colorize('green', 'public'))
+
+    if repo.get('isFork'):
+        tags.append("fork")
+
+    if repo.get('isArchived'):
+        tags.append("archived")
+
+    if tags:
+        result += " [" + ", ".join(tags) + "]"
+
+    return result
 
 
 def list_repos(repos):
