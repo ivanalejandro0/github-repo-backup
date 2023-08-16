@@ -22,7 +22,7 @@ def get_repos_from_github():
     # https://docs.github.com/en/graphql/reference/objects#repository
     try:
         result = subprocess.run(["gh", 'repo', 'list', '--limit', '999', '--json',
-                                'name,sshUrl,isPrivate,isFork,isArchived,pushedAt'],
+                                'name,sshUrl,isPrivate,isFork,isArchived'],
                                 stdout=subprocess.PIPE)
         repos = result.stdout.decode('utf-8')
     except FileNotFoundError:
