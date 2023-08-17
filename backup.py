@@ -164,7 +164,7 @@ if __name__ == '__main__':
         '-j', '--json', dest='load_from', action='store_const', const="json",
         help=(
             f"use repositories from '{JSON_REPOS_FILE}' file. "
-            f"The '{JSON_REPOS_FILE}' is created and updated when you use the '--github' option."
+            f"The '{JSON_REPOS_FILE}' is created and updated when you use the '--github' option. This is the default source."
         )
     )
     group.add_argument(
