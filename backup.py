@@ -151,19 +151,38 @@ def updater(repos):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Git repositories backup tool')
+
     parser.add_argument('-l', '--list', action='store_true',
-                        help='list repositories')
+                        help='List repositories')
     parser.add_argument('-s', '--sync', action='store_true',
                         help='sync local repositories with latest remote data')
-    parser.add_argument(
-        '-f', '--from', dest='load_from',
-        choices=['json', 'github', 'local'], default='json',
+
+    g = parser.add_argument_group("Repositories",
+                                  description="use repositories from different sources")
+    group = g.add_mutually_exclusive_group()
+    group.add_argument(
+        '-j', '--json', dest='load_from', action='store_const', const="json",
         help=(
-            f'use repositories from "{JSON_REPOS_FILE}" file, github, or local folders '
-                "(default: %(default)s). "
-                f'Note that using "github" will update the "{JSON_REPOS_FILE}" file.'
+            f"use repositories from '{JSON_REPOS_FILE}' file. "
+            f"The '{JSON_REPOS_FILE}' is created and updated when you use the '--github' option."
         )
     )
+    group.add_argument(
+        '-g', '--github', dest='load_from', action='store_const', const="github",
+        help=(
+            "use repositories from GitHub (calls the 'gh' cli app). "
+            f"The '{JSON_REPOS_FILE}' is created and updated when you use the '--github' option."
+        )
+    )
+    group.add_argument(
+        '-L', '--local', dest='load_from', action='store_const', const="local",
+        help=(
+            f"use repositories from on '{REPOS_LOCATION}' folder. "
+            "This option will list repositories with minimal information, "
+            "and can be used to sync regular folders without depending on GitHub."
+        )
+    )
+    group.set_defaults(load_from="json")
 
     args = parser.parse_args()
 
@@ -180,9 +199,6 @@ if __name__ == '__main__':
         save_repos_to_json(repos)
     elif args.load_from == "local":
         repos = get_repos_from_folders()
-
-    if repos is None:
-        sys.exit("Error: no repos found")
 
     if args.list:
         list_repos(repos)
