@@ -152,9 +152,10 @@ def updater(repos):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Git repositories backup tool')
 
-    parser.add_argument('-l', '--list', action='store_true',
+    actions = parser.add_mutually_exclusive_group()
+    actions.add_argument('-l', '--list', action='store_true',
                         help='List repositories')
-    parser.add_argument('-s', '--sync', action='store_true',
+    actions.add_argument('-s', '--sync', action='store_true',
                         help='sync local repositories with latest remote data')
 
     g = parser.add_argument_group("Repositories",
@@ -187,7 +188,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if len(sys.argv[1:]) == 0:
-        # No arguments provided? show help
+        # No arguments provided? show help and exit
         parser.print_help()
         sys.exit()
 
