@@ -5,6 +5,12 @@ repositories.
 This only backups git repositories, it ignores other GitHub data like
 issues/wiki/projects/etc.
 
+You can copy and run `backup.py` and it should be enough, you only need Python
+3.5+ and (for getting the repo list) the [GitHub CLI](https://cli.github.com/)
+
+There's a `simple.py` script that's the simplest version of the `backup.py`
+script with no colors and no extra information. You may want to check that out
+if you want to quickly grasp how things are done.
 
 ## About the script
 One goal of this script is to be short and simple, so it can be easily reviewed
@@ -26,3 +32,4 @@ parts like syncing the repositories does not. So this tool should work with
 other providers with not many changes.
 For example, you could fill up the json file yourself and the script should
 sync with no problem.
+
