@@ -159,28 +159,28 @@ if __name__ == '__main__':
                         help='sync local repositories with latest remote data')
 
     g = parser.add_argument_group("Repositories",
-                                  description="use repositories from different sources")
+                                  description="Get repository list from different sources")
     group = g.add_mutually_exclusive_group()
     group.add_argument(
         '-j', '--json', dest='load_from', action='store_const', const="json",
         help=(
-            f"use repositories from '{JSON_REPOS_FILE}' file. "
-            f"The '{JSON_REPOS_FILE}' is created and updated when you use the '--github' option. This is the default source."
+            f"get repository list from '{JSON_REPOS_FILE}' file. "
+            f"The '{JSON_REPOS_FILE}' file is created and updated when you use the '--github' option. This is the default source."
         )
     )
     group.add_argument(
         '-g', '--github', dest='load_from', action='store_const', const="github",
         help=(
-            "use repositories from GitHub (calls the 'gh' cli app). "
-            f"The '{JSON_REPOS_FILE}' is created and updated when you use the '--github' option."
+            "get repository list from GitHub (calls the 'gh' cli app). "
+            f"The '{JSON_REPOS_FILE}' file is created and updated when you use the '--github' option."
         )
     )
     group.add_argument(
         '-L', '--local', dest='load_from', action='store_const', const="local",
         help=(
-            f"use repositories from on '{REPOS_LOCATION}' folder. "
+            f"get repository list from '{REPOS_LOCATION}' folder. "
             "This option will list repositories with minimal information, "
-            "and can be used to sync regular folders without depending on GitHub."
+            "and can be used to sync any git repo without depending on GitHub."
         )
     )
     group.set_defaults(load_from="json")
