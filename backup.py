@@ -205,5 +205,4 @@ if __name__ == '__main__':
         list_repos(repos)
 
     if args.sync:
-        # TODO: maybe if there are no json/local repos, load from github
         updater(repos)
