@@ -16,6 +16,10 @@ if sys.version_info < MIN_PYTHON:
 JSON_REPOS_FILE = "repositories.json"
 REPOS_LOCATION = "repos"
 
+# TODO:
+# - option to skip update on archived repos
+# - option to skip sync repos, maybe some heavy fork that's irrelevant if lost
+# - add org repo sync, i.e. Cabinet
 
 def get_repos_from_github():
     # `gh repo list --json` takes fields that are documented on:
@@ -154,9 +158,9 @@ if __name__ == '__main__':
 
     actions = parser.add_mutually_exclusive_group()
     actions.add_argument('-l', '--list', action='store_true',
-                        help='List repositories')
+                         help='List repositories')
     actions.add_argument('-s', '--sync', action='store_true',
-                        help='sync local repositories with latest remote data')
+                         help='sync local repositories with latest remote data')
 
     g = parser.add_argument_group("Repositories",
                                   description="Get repository list from different sources")
