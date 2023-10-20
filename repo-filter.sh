@@ -41,6 +41,7 @@ while true; do
     --bind="ctrl-o:toggle-preview" \
     --preview-window="right" \
     --preview="jq -r '.[] | select(.name == \"{}\")' repositories.json" \
+    --preview-label="Repository information from json file" \
     <<< "$items"
   )
 
