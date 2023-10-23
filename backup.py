@@ -17,7 +17,6 @@ JSON_REPOS_FILE = "repositories.json"
 REPOS_LOCATION = "repos"
 
 # TODO:
-# - option to skip update on archived repos
 # - option to skip sync repos, maybe some heavy fork that's irrelevant if lost
 # - add org repo sync, i.e. Cabinet
 
@@ -132,12 +131,18 @@ def colorize(color_name: ColorOptions, text: str):
     return f"{color}{text}{reset}"
 
 
-def updater(repos):
+def updater(repos, skip_archived=False):
     os.makedirs(REPOS_LOCATION, exist_ok=True)
     os.chdir(REPOS_LOCATION)
 
     for repo in repos:
         name = repo['name'] + ".git"
+
+        if repo['isArchived']:
+            message = f"{colorize('orange', 'Skipping:')}: "
+            message += format_repo_info(repo)
+            print(message)
+            continue
 
         repo_exists = os.path.isdir(name)
 
@@ -189,6 +194,9 @@ if __name__ == '__main__':
     )
     group.set_defaults(load_from="json")
 
+    group = parser.add_argument_group("Sync options")
+    group.add_argument('-a', '--skip-archived', action='store_true', help='Skip archived repositories on sync')
+
     args = parser.parse_args()
 
     if len(sys.argv[1:]) == 0:
@@ -209,4 +217,4 @@ if __name__ == '__main__':
         list_repos(repos)
 
     if args.sync:
-        updater(repos)
+        updater(repos, args.skip_archived)
