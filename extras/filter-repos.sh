@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
 
-# # on OSX you'll need GNU coreutils
-# readlink="readlink"
-# if hash greadlink 2>/dev/null; then
-#     readlink="greadlink"  # `brew install coreutils`
-# fi
-# SCRIPT_DIR=$(dirname "$($readlink -f "${BASH_SOURCE[0]}")")
+# script to filter using fzf the repositories by name
 
 LOGGING_ENABLED=0
 

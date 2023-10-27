@@ -3,7 +3,7 @@
 # This script uses the json data we got from GitHub and use the `jq` app to
 # filter through the json information.
 
-jq -r '.[] | select(.isArchived) | .name' repositories.json  # show archived repos, only names
+jq -r '.[] | select(.isArchived | not) | .name' repositories.json  # show non-archived repos, only names
 # jq -r '.[] | select(.isPrivate) | .name' repositories.json  # show private repos, only names
 # jq -r '.[] | select(.isPrivate)' repositories.json  # show private repos
 # jq -r '.[] | select(.isPrivate | not)' repositories.json  # show public repos
