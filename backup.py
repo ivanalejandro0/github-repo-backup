@@ -138,7 +138,7 @@ def updater(repos, skip_archived=False):
     for repo in repos:
         name = repo['name'] + ".git"
 
-        if repo['isArchived']:
+        if skip_archived and repo['isArchived']:
             message = f"{colorize('orange', 'Skipping:')}: "
             message += format_repo_info(repo)
             print(message)
