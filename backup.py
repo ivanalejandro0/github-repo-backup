@@ -19,6 +19,12 @@ REPOS_LOCATION = "repos"
 # TODO:
 # - option to skip sync repos, maybe some heavy fork that's irrelevant if lost
 # - add org repo sync, i.e. Cabinet
+# - stop syncing after repo fetch gets no update, it seems that github lists
+#   repos in order of last updated first, to be confirmed.
+#   maybe use search instaed of list: gh search --help (look for --sort and --order)
+#     listRun() https://github.com/cli/cli/blob/trunk/pkg/cmd/repo/list/list.go#L119
+#     listRepos() https://github.com/cli/cli/blob/trunk/pkg/cmd/repo/list/http.go#L32
+#     searchRepos() https://github.com/cli/cli/blob/trunk/pkg/cmd/repo/list/http.go#L121
 
 def get_repos_from_github():
     # `gh repo list --json` takes fields that are documented on:
